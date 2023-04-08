@@ -16,6 +16,8 @@ dotenv.config({path:'./config/config.env'});
 connectDB();
 
 const booking = require('./routes/booking');
+const auth = require('./routes/auth');
+const campground = require('./routes/campground');
 
 const app = express();
 app.use(express.json());
@@ -28,6 +30,8 @@ app.use(express.json());
 // app.use(cors());
 
 app.use('/api/v5/booking',booking);
+app.use('/api/v5/auth',auth);
+app.use('/api/v5/campground',campground);
 
 const PORT = process.env.PORT || 500;
 const server = app.listen(PORT, console.log('Server running in', process.env.NODE_ENV, ' mode on port ', PORT));

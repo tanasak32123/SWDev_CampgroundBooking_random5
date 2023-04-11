@@ -62,6 +62,7 @@ exports.getBooking = async (req,res,next)=>{
 exports.addBooking = async (req,res,next) =>{
     try{
         req.body.campground = req.params.campgroundId;
+
         req.body.user = req.user.id;
 
         const existedbookings = await Booking.find({user:req.user.id});

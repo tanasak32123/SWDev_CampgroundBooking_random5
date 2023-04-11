@@ -1,11 +1,11 @@
 const express = require('express');
 const {getBookings,getBooking,addBooking,updatebooking,deleteBooking} = require('../controllers/bookings')
-const router = express.Router();
+const router = express.Router({mergeParams:true});
 
 // fake authorization for testing
 const fakeAuth = (req,res,next)=>{
     req.user = {
-        id:'1',
+        id:'643525c350eca24920c13714',
         role:'admin'
     };
     next();

@@ -10,7 +10,7 @@ exports.getCampgrounds = async (req,res,next) => {
 
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match=>`$${match}`);
-    query = Campground.find(JSON.parse(queryStr));
+    query = Campground.find(JSON.parse(queryStr)).populate('bookings');
 
     if(req.query.select){
         const fields=req.query.select.split(',').join(' ');
@@ -64,11 +64,16 @@ exports.getCampground = async (req,res,next) => {
 };
 
 exports.createCampground = async (req,res,next) => {
-    const campground = await Campground.create(req.body);
-    res.status(200).json({
-        success:true,
-        data:campground
+    try{
+        const campground = await Campground.create(req.body);
+        res.status(200).json({
+                success:true,
+                data:campground
     });
+    }catch(err){
+        res.status(400).json({success:false});
+    }
+    
 };
 
 exports.updateCampground = async (req,res,next) => {

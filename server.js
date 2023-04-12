@@ -9,13 +9,18 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 //Route files
-const auth = require("./routes/auth");
+const bookings = require('./routes/bookings');
+const auth = require('./routes/auth');
+const campgrounds = require('./routes/campgrounds');
 
 const app = express();
 
 app.use(express.json());
 
-app.use(`/api/v1/auth`, auth);
+//Mount routes
+app.use('/api/v5/bookings',bookings);
+app.use('/api/v5/auth',auth);
+app.use('/api/v5/campgrounds',campgrounds);
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true });
@@ -40,3 +45,4 @@ process.on(`unhandledRejection`, (err, promise) => {
   //Close server & exit process
   server.close(() => process.exit(1));
 });
+

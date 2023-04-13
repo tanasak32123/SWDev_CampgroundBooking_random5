@@ -1,6 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const rateLimit = require("express-rate-limit");
 
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -9,18 +16,43 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 //Route files
-const bookings = require('./routes/bookings');
-const auth = require('./routes/auth');
-const campgrounds = require('./routes/campgrounds');
+const bookings = require("./routes/bookings");
+const auth = require("./routes/auth");
+const campgrounds = require("./routes/campgrounds");
 
 const app = express();
 
+//Enable CORS
+app.use(cors());
+
 app.use(express.json());
 
+//Sanitize data
+app.use(mongoSanitize());
+
+//Prevent XSS attacks
+app.use(xss());
+
+app.use(cookieParser());
+
+//Set security headers
+app.use(helmet());
+
+//Rate Limiting
+const limiter = rateLimit({
+  windowsMs: 10 * 60 * 1000, // 10 mins
+  max: 10000,
+});
+
+app.use(limiter);
+
+//Prevent http param pollutions
+app.use(hpp());
+
 //Mount routes
-app.use('/api/v5/bookings',bookings);
-app.use('/api/v5/auth',auth);
-app.use('/api/v5/campgrounds',campgrounds);
+app.use("/api/v5/bookings", bookings);
+app.use("/api/v5/auth", auth);
+app.use("/api/v5/campgrounds", campgrounds);
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true });
@@ -45,4 +77,3 @@ process.on(`unhandledRejection`, (err, promise) => {
   //Close server & exit process
   server.close(() => process.exit(1));
 });
-

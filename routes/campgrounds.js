@@ -4,7 +4,12 @@ const {getCampgrounds,getCampground,createCampground,updateCampground,deleteCamp
 const bookingRouter = require('./bookings');
 
 router.use('/:campgroundId/bookings/',bookingRouter);
-router.route('/').get(getCampgrounds).post(createCampground);
-router.route('/:id').get(getCampground).put(updateCampground).delete(deleteCampground);
+router.route('/')
+    .get(getCampgrounds)
+    .post(createCampground);
+router.route('/:id')
+    .get(getCampground)
+    .put(updateCampground)
+    .delete(deleteCampground);
 
 module.exports=router;

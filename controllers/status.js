@@ -34,9 +34,9 @@ exports.getAverage = async (req,res,next) =>{
     const dayNumber = Number(req.params.dayNumber)
     let campgroundId = req.params.campgroundId;
     let datenow = new Date();
-    datenow = new Date(datenow.getUTCFullYear(), datenow.getUTCMonth()-1 , datenow.getUTCDate())
+    datenow = new Date(datenow.getUTCFullYear(), datenow.getUTCMonth() , datenow.getUTCDate())
     const tomorrow = new Date(datenow.getTime() + 86400000);
-    const lastNday = new Date(datenow.getTime() - dayNumber*86400000);
+    const lastNday = new Date(datenow.getTime() - (dayNumber-1)*86400000);
     
     const queryJson = {date:{$gte:lastNday.toISOString(),
                             $lt:tomorrow.toISOString()}}
@@ -44,9 +44,9 @@ exports.getAverage = async (req,res,next) =>{
     let query;
         if(campgroundId){
             queryJson.campground = campgroundId;
-            query = Campground.find(queryJson);
+            query = Booking.find(queryJson);
         }else{
-            query = Campground.find(queryJson);
+            query = Booking.find(queryJson);
         }
     const bookings = await query;
     res.status(200).json({success: true,
@@ -54,7 +54,8 @@ exports.getAverage = async (req,res,next) =>{
             dayNumber: dayNumber,
             average: bookings.length/dayNumber,
             fromDate: lastNday.toISOString(),
-            toDate:datenow.toISOString()});
+            beforeDate:tomorrow.toISOString(),
+            bookings:bookings});
             
     }catch(err){
         return res.status(500).json({success:false,message:"Canont find Campground's booking infomation"});

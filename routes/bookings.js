@@ -1,22 +1,14 @@
 const express = require('express');
 const {getBookings,getBooking,addBooking,updatebooking,deleteBooking} = require('../controllers/bookings')
 const router = express.Router({mergeParams:true});
-
-// fake authorization for testing
-const fakeAuth = (req,res,next)=>{
-    req.user = {
-        id:'643525c350eca24920c13714',
-        role:'admin'
-    };
-    next();
-};
+const {protect, authorize} = require('../middleware/auth');
 
 router.route('/')
-    .get(fakeAuth,getBookings)
-    .post(fakeAuth,addBooking);
+    .get(protect,getBookings)
+    .post(protect,authorize('admin','user'),addBooking);
 router.route('/:id')
-    .get(fakeAuth,getBooking)
-    .put(fakeAuth,updatebooking)
-    .delete(fakeAuth,deleteBooking);
+    .get(protect,authorize('admin','user'),getBooking)
+    .put(protect,authorize('admin','user'),updatebooking)
+    .delete(protect,authorize('admin','user'),deleteBooking);
 
 module.exports=router;

@@ -23,7 +23,6 @@ exports.getStatus = async (req,res,next) =>{
     }catch(err){
         return res.status(500).json({success:false,message:"Canont find Campground's booking status"});
     }
-    
 }
 
 //@desc     Get Campground's average Booking nummber of a the last n day

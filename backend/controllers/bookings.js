@@ -87,6 +87,13 @@ exports.addBooking = async (req,res,next) =>{
             return res.status(404).json({success:false,message:`No campground with the id of ${req.params.campgroundId}`});
         }
 
+        //make sure to not have bookings more than campground's capacity
+        const bookingNumber = await Booking.find({campground: campground._id,date: req.body.date});
+        if(bookingNumber.length >= campground.capacity && req.user.role !== 'admin'){
+            return res.status(400).json({success:false,
+                            message:`The campground with ID ${req.user.id} has full bookings capacity for the date ${req.body.date}`});
+        }
+
         const booking = await Booking.create(req.body);
         res.status(200).json({success:true,data:booking});
     } catch (error){

@@ -7,6 +7,7 @@ const {protect, authorize} = require('../middleware/auth');
 
 router.use('/:campgroundId/bookings/',bookingRouter);
 router.use('/:campgroundId/status/',statusRouter);
+router.use('/recommendation/',statusRouter);
 router.route('/')
     .get(getCampgrounds)
     .post(protect, authorize('admin'), createCampground);

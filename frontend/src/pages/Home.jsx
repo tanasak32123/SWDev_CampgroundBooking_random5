@@ -1,20 +1,24 @@
 import { Link } from "react-router-dom";
-import { FaQuestionCircle, FaTicketAlt } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <>
       <section className="heading">
-        <h1>Vac Q: A Vaccine Booking System</h1>
-        <p>Please choose from an option below</p>
+        <h1>A Campground Booking System</h1>
       </section>
-      <Link to="/new-ticket" className="btn btn-reverse btn-block"></Link>
-      <FaQuestionCircle />
-      Create New Appointment
-      <Link to="/tickets" className="btn btn-block">
-        <FaTicketAlt />
-        View My Appointments
-      </Link>
+
+      {!user ? (
+        <Link to="/login" className="btn btn-block">
+          <FaSignInAlt />
+          Login
+        </Link>
+      ) : (
+        <>Welcome, {user.name}</>
+      )}
     </>
   );
 }

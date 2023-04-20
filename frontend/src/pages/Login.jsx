@@ -11,11 +11,11 @@ function Login() {
     password: "",
   });
 
-  const { name, email, password, password2 } = formData;
+  const { email, password } = formData;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -45,6 +45,7 @@ function Login() {
       password,
     };
     dispatch(login(userData));
+    navigate("/");
   };
 
   return (
@@ -53,11 +54,12 @@ function Login() {
         <h1>
           <FaSignInAlt /> Login
         </h1>
-        <p>Please login to get support</p>
+        {/* <p>Please login to get support</p> */}
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               className="form-control"
@@ -70,6 +72,7 @@ function Login() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               className="form-control"

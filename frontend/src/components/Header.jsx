@@ -1,4 +1,10 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import {
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUser,
+  FaCampground,
+  FaBook,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -17,16 +23,29 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">Support Desk</Link>
+        <Link to="/">
+          <FaCampground />
+          &nbsp;Campground
+        </Link>
       </div>
       <ul>
         {user ? (
-          <li>
-            <button className="btn" onClick={onLogout}>
-              <FaSignOutAlt />
-              Logout
-            </button>
-          </li>
+          <>
+            {user.role === "admin" && (
+              <li>
+                <Link to="/booking">
+                  <FaBook />
+                  Booking
+                </Link>
+              </li>
+            )}
+            <li>
+              <button className="btn" onClick={onLogout}>
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li>

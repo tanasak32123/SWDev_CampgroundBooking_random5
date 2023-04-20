@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5001/api/v1/auth/";
+const API_URL = `${process.env.REACT_APP_BACKEND_URI}/api/v5/auth/`;
 
 //Register user
 const register = async (userData) => {
@@ -16,18 +16,19 @@ const register = async (userData) => {
   } catch (error) {
     console.log("authService: register");
     console.log(error);
+    console.log(error.response.data);
   }
 };
 
 //Login user
 const login = async (userData) => {
   const response = await axios.post(API_URL + "login", userData);
+  // console.log(response.data);
   if (response.data) {
     //localStorage.setItem('user',JSON.stringify(response.data))
-    localStorage.setItem("user", response.data.name);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
   }
-  console.log(response.data);
-  return response.data;
+  return response.data.user;
 };
 
 //Logout user

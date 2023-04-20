@@ -11,20 +11,19 @@ function Register() {
     email: "",
     password: "",
     password2: "",
-    role: "user",
+    tel: "",
+    // role: "user",
   });
 
-  const { name, email, password, password2, role } = formData;
+  const { name, email, password, password2, tel } = formData;
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => {
-      return state.auth;
-    }
-  );
+  const { user, isError, isSuccess, message } = useSelector((state) => {
+    return state.auth;
+  });
 
   useEffect(() => {
     if (isError) {
@@ -53,7 +52,8 @@ function Register() {
         name,
         email,
         password,
-        role,
+        tel,
+        // role,
       };
       dispatch(register(userData));
     }
@@ -70,6 +70,7 @@ function Register() {
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               className="form-control"
@@ -82,6 +83,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               className="form-control"
@@ -94,6 +96,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               className="form-control"
@@ -106,6 +109,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password2">Re-confirm password</label>
             <input
               type="password"
               className="form-control"
@@ -118,14 +122,15 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="tel">Telephone number</label>
             <input
               type="text"
               className="form-control"
-              id="role"
-              name="role"
-              value={role}
+              id="tel"
+              name="tel"
+              value={tel}
               onChange={onChange}
-              placeholder="Enter Your Role"
+              placeholder="Enter Your Telephone Number"
               required
             />
           </div>

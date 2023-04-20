@@ -17,7 +17,18 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie("token", token, options)
-    .json({ success: true, token });
+    .json({
+      success: true,
+      //add for frontend
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      //end for frontend
+      token,
+    });
 };
 
 //@desc     Register user
@@ -36,10 +47,18 @@ exports.register = async (req, res, next) => {
       role,
     });
 
-    sendTokenResponse(user, 200, res);
+    // sendTokenResponse(user, 200, res);
+    res.status(200).json({ success: true });
   } catch (err) {
     res.status(400).json({ success: false });
-    console.log(err.stack);
+    if (err.name === "ValidationError") {
+      console.error(
+        Object.values(err.errors).map((val) => {
+          return { [val.path]: val.message };
+        })
+      );
+    }
+    // console.error(err.errors.message);
   }
 };
 

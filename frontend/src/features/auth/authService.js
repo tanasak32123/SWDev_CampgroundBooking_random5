@@ -22,7 +22,9 @@ const register = async (userData) => {
 
 //Login user
 const login = async (userData) => {
-  const response = await axios.post(API_URL + "login", userData);
+  const response = await axios.post(API_URL + "login", userData, {
+    withCredentials: true,
+  });
   // console.log(response.data);
   if (response.data) {
     //localStorage.setItem('user',JSON.stringify(response.data))
@@ -32,8 +34,13 @@ const login = async (userData) => {
 };
 
 //Logout user
-const logout = () => {
-  localStorage.setItem("user", null);
+const logout = async () => {
+  const response = await axios.get(API_URL + "logout", {
+    withCredentials: true,
+  });
+  if (response.data.success) {
+    localStorage.setItem("user", null);
+  }
 };
 
 const authService = {

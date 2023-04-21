@@ -61,7 +61,7 @@ function Register() {
 
   return (
     <>
-      <section className="heading">
+      <section className="heading text-center">
         <h1>
           <FaUser /> Register
         </h1>
@@ -69,7 +69,7 @@ function Register() {
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="name">Name</label>
             <input
               type="text"
@@ -82,7 +82,7 @@ function Register() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -95,7 +95,7 @@ function Register() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -108,7 +108,7 @@ function Register() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="password2">Re-confirm password</label>
             <input
               type="password"
@@ -121,7 +121,7 @@ function Register() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="tel">Telephone number</label>
             <input
               type="text"
@@ -134,8 +134,8 @@ function Register() {
               required
             />
           </div>
-          <div className="form-group">
-            <button className="btn btn-block">Submit</button>
+          <div className="form-group mb-4">
+            <button className="btn btn-block w-100">Submit</button>
           </div>
         </form>
       </section>

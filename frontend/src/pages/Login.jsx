@@ -50,15 +50,14 @@ function Login() {
 
   return (
     <>
-      <section className="heading">
+      <section className="text-center">
         <h1>
           <FaSignInAlt /> Login
         </h1>
-        {/* <p>Please login to get support</p> */}
       </section>
-      <section className="form">
+      <section className={`form`}>
         <form onSubmit={onSubmit}>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -71,7 +70,7 @@ function Login() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -85,7 +84,9 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-block">Submit</button>
+            <button type="submit" className="btn btn-block w-100">
+              Submit
+            </button>
           </div>
         </form>
       </section>

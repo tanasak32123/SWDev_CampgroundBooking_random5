@@ -8,6 +8,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import styles from "../assets/css/Header.module.css";
 
 function Header() {
   const navigate = useNavigate();
@@ -21,28 +22,30 @@ function Header() {
   };
 
   return (
-    <header className="header">
+    <header
+      className={`${styles.header} d-flex justify-content-between align-items-center py-3`}
+    >
       <div className="logo">
         <Link to="/">
           <FaCampground />
           &nbsp;Campground
         </Link>
       </div>
-      <ul>
+      <ul className={`d-flex align-items-center justify-content-between mb-0`}>
         {user ? (
           <>
             {user.role === "admin" && (
               <li>
-                <Link to="/booking">
+                <Link to="/statistic">
                   <FaBook />
-                  Booking
+                  Statistics
                 </Link>
               </li>
             )}
             <li>
               <button className="btn" onClick={onLogout}>
                 <FaSignOutAlt />
-                Logout
+                &nbsp;Logout
               </button>
             </li>
           </>
@@ -51,13 +54,13 @@ function Header() {
             <li>
               <Link to="/login">
                 <FaSignInAlt />
-                Login
+                &nbsp;Login
               </Link>
             </li>
             <li>
               <Link to="/register">
                 <FaUser />
-                Register
+                &nbsp;Register
               </Link>
             </li>
           </>

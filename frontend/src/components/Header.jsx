@@ -4,6 +4,7 @@ import {
   FaUser,
   FaCampground,
   FaBook,
+  FaChartLine,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,10 +35,16 @@ function Header() {
       <ul className={`d-flex align-items-center justify-content-between mb-0`}>
         {user ? (
           <>
+            <li>
+              <Link to="/recommendation">
+                <FaBook />
+                Recommendation
+              </Link>
+            </li>
             {user.role === "admin" && (
               <li>
                 <Link to="/statistic">
-                  <FaBook />
+                  <FaChartLine />
                   Statistics
                 </Link>
               </li>

@@ -50,17 +50,15 @@ function Home() {
     <>
       <div className="d-flex justify-content-center align-items-center">
         <div className="w-100">
-          <section className={``}>
-            <h1 className="text-center">A Campground Booking System</h1>
-          </section>
+          <h1 className="text-center mb-4">A Campground Booking System</h1>
 
           {!user ? (
-            <div>
+            <section className="form">
               <Link to="/login" className="btn btn-block">
                 <FaSignInAlt />
                 &nbsp;Login
               </Link>
-            </div>
+            </section>
           ) : (
             <>
               <div className="text-center">
@@ -95,13 +93,11 @@ function Home() {
                       label="Nights"
                       className="mb-3"
                     >
-                      <Form.Control
-                        ref={nightsRef}
-                        type="number"
-                        defaultValue={0}
-                        min={0}
-                        max={3}
-                      />
+                      <Form.Select ref={nightsRef} defaultValue={"1"}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </Form.Select>
                     </FloatingLabel>
                   </Col>
                 </Row>

@@ -19,6 +19,7 @@ connectDB();
 const bookings = require("./routes/bookings");
 const auth = require("./routes/auth");
 const campgrounds = require("./routes/campgrounds");
+const status = require('./routes/status');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use(hpp());
 app.use("/api/v5/bookings", bookings);
 app.use("/api/v5/auth", auth);
 app.use("/api/v5/campgrounds", campgrounds);
+app.use("api/v5/status/", status);
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true });

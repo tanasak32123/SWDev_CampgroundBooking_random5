@@ -59,7 +59,7 @@ app.use(hpp());
 app.use("/api/v5/bookings", bookings);
 app.use("/api/v5/auth", auth);
 app.use("/api/v5/campgrounds", campgrounds);
-app.use("api/v5/status/", status);
+app.use("/api/v5/status/", status);
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true });

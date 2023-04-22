@@ -19,7 +19,7 @@ connectDB();
 const bookings = require("./routes/bookings");
 const auth = require("./routes/auth");
 const campgrounds = require("./routes/campgrounds");
-const status = require('./routes/status');
+const status = require("./routes/status");
 
 const app = express();
 

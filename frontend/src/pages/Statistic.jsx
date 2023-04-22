@@ -37,17 +37,27 @@ const Statistic = () => {
   const getAvgBooking = async () => {
     const id = avgBookingNameRef.current.value;
     const nDays = avgBookingNdaysRef.current.value;
-    if (!id) return toast.error("Please select campground");
     if (!nDays) return toast.error("Please fill last n days");
-    await fetch(
-      process.env.REACT_APP_BACKEND_URI +
-        `/api/v5/campgrounds/${id}/status/average/${nDays}`
-    )
-      .then((res) => {
-        if (res.ok) return res.json();
-        else return null;
-      })
-      .then((res) => setAvgBooking(res));
+    if (!id) {
+      await fetch(
+        process.env.REACT_APP_BACKEND_URI + `/api/v5/status/average/${nDays}`
+      )
+        .then((res) => {
+          if (res.ok) return res.json();
+          else return null;
+        })
+        .then((res) => setAvgBooking(res));
+    } else {
+      await fetch(
+        process.env.REACT_APP_BACKEND_URI +
+          `/api/v5/campgrounds/${id}/status/average/${nDays}`
+      )
+        .then((res) => {
+          if (res.ok) return res.json();
+          else return null;
+        })
+        .then((res) => setAvgBooking(res));
+    }
   };
 
   return (
@@ -60,7 +70,7 @@ const Statistic = () => {
       </section>
       <section className="form">
         <h5 className="mb-3">
-          <u>Booking average in last n days</u>
+          <u>Booking average</u>
         </h5>
         {isErrorCampground && <>failed to load data</>}
         {isLoadingCampground ? (
@@ -69,16 +79,13 @@ const Statistic = () => {
           <>
             <Row>
               <Col md={8} className="mb-3">
-                <FloatingLabel
-                  controlId="floatingSelect"
-                  label="Campground Name"
-                >
+                <FloatingLabel controlId="floatingSelect" label="Campground">
                   <Form.Select
                     aria-label="Floating label select campground"
                     defaultValue={""}
                     ref={avgBookingNameRef}
                   >
-                    <option value="">Please select campground</option>
+                    <option value="">All campgrounds</option>
                     {dataCampground?.map((e) => {
                       return (
                         <option key={e.id} value={e?.id}>
@@ -98,6 +105,7 @@ const Statistic = () => {
                   <Form.Control
                     ref={avgBookingNdaysRef}
                     type="number"
+                    defaultValue={1}
                     min={1}
                     max={100}
                   />
@@ -129,7 +137,7 @@ const Statistic = () => {
                   </tbody>
                 </Table>
               ) : (
-                <div className="text-center">Empty</div>
+                <div className="text-center">Empty Data</div>
               )}
             </Row>
           </>

@@ -81,6 +81,7 @@ exports.getRecommendation  = async (req,res,next) =>{
 
     //calculate date time period
     try{
+        // console.log(req.query.period_start, req.query.period_end);
         if(req.query.period_start){
             dateStart = new Date(req.query.period_start);
             // range from start to end date
@@ -116,6 +117,7 @@ exports.getRecommendation  = async (req,res,next) =>{
                             $lt:dateEnd.toISOString()}};
     const periodDays = parseInt((dateEnd.getTime()-dateStart.getTime())/86400000);
     
+    // console.log(bookingQuery);
     try{
         const bookings =  await Booking.find(bookingQuery).select("date campground");
         const campgrounds = await Campground.find();
@@ -131,7 +133,7 @@ exports.getRecommendation  = async (req,res,next) =>{
                                         address:camp.address,
                                         tel:camp.tel};
         });
-
+        
         // count booking for each date for each campground
         bookings.forEach((booking)=>{
             let day = new Date(booking.date);
@@ -152,7 +154,7 @@ exports.getRecommendation  = async (req,res,next) =>{
                     start = (i+1 < d.days.length)? i+1 : d.days.length-1;
                 }
             }
-            if((d.days.length-1) - start >= night){
+            if((d.days.length) - start >= night){
                 daylist.push({fromDate:start, toDate:d.days.length-1});
             }
 
@@ -198,7 +200,6 @@ exports.getRecommendation  = async (req,res,next) =>{
             recommended:recommendationList});
 
     }catch(err){
-        console.log(err);
         return res.status(500).json({success:false,message:"Invalid Date format"});
     }
 }

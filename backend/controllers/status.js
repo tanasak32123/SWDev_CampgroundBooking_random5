@@ -194,6 +194,7 @@ exports.getRecommendation  = async (req,res,next) =>{
             //bookings:bookings,
             //campgrounds:campgrounds,
             //campBookingDays:campBookingDays,
+            count: recommendationList.length,
             recommended:recommendationList});
 
     }catch(err){

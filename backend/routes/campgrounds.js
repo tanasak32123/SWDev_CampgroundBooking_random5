@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {getCampgrounds,getCampground,createCampground,updateCampground,deleteCampground} = require('../controllers/campgrounds');
+const {getCampgrounds,getCampground,
+    createCampground,updateCampground,deleteCampground} = require('../controllers/campgrounds');
 const bookingRouter = require('./bookings');
 const statusRouter = require('./status');
 const {protect, authorize} = require('../middleware/auth');

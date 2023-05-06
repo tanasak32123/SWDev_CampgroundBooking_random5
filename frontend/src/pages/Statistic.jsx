@@ -32,7 +32,7 @@ const Statistic = () => {
     },
   });
 
-  console.log(dataCampground);
+  // console.log(dataCampground);
 
   const getAvgBooking = async () => {
     const id = avgBookingNameRef.current.value;
@@ -40,7 +40,10 @@ const Statistic = () => {
     if (!nDays) return toast.error("Please fill last n days");
     if (!id) {
       await fetch(
-        process.env.REACT_APP_BACKEND_URI + `/api/v5/status/average/${nDays}`
+        process.env.REACT_APP_BACKEND_URI + `/api/v5/status/average/${nDays}`,
+        {
+          credentials: "include",
+        }
       )
         .then((res) => {
           if (res.ok) return res.json();
@@ -48,15 +51,19 @@ const Statistic = () => {
         })
         .then((res) => setAvgBooking(res));
     } else {
-      await fetch(
+      const res = await fetch(
         process.env.REACT_APP_BACKEND_URI +
-          `/api/v5/campgrounds/${id}/status/average/${nDays}`
+          `/api/v5/campgrounds/${id}/status/average/${nDays}`,
+        {
+          credentials: "include",
+        }
       )
         .then((res) => {
           if (res.ok) return res.json();
           else return null;
         })
         .then((res) => setAvgBooking(res));
+      console.log(res);
     }
   };
 

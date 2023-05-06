@@ -26,7 +26,8 @@ const CampgroundSchema = new mongoose.Schema({
     toObject: {virtuals:true}
 });
 
-CampgroundSchema.pre('remove',async function(next){
+
+CampgroundSchema.pre('deleteOne', { query: true, document: true },async function(next){
     console.log(`Bookings being removed from Campground ${this._id}`);
     await this.model(`Booking`).deleteMany({campground:this._id});
     next();

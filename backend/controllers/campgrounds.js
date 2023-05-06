@@ -115,7 +115,7 @@ exports.deleteCampground = async(req,res,next) =>{
         if(!campground){
             return res.status(400).json({success:false});
         }
-        await Campground.findByIdAndRemove(req.params.id);
+        await campground.deleteOne();
         res.status(200).json({success:true, data: {}});
     }catch(err){
         console.log(err);

@@ -25,10 +25,14 @@ function Home() {
 
     await fetch(
       process.env.REACT_APP_BACKEND_URI +
-        `/api/v5/campgrounds/recommendation/?period_start=${startDate}&period_end=${endDate}&night=${nights}`
+        `/api/v5/campgrounds/recommendation/?period_start=${startDate}&period_end=${endDate}&night=${nights}`,
+      {
+        credentials: "include",
+      }
     )
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setRecommendData(res.recommended);
       });
   };

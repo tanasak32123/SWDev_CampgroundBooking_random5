@@ -15,7 +15,7 @@ exports.getCampgrounds = async (req,res,next) => {
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match=>`$${match}`);
     console.log(queryStr);
-    query = Campground.find(JSON.parse(queryStr)).populate('bookings');
+    query = Campground.find(JSON.parse(queryStr))//.populate('bookings');
 
     if(req.query.select){
         const fields=req.query.select.split(',').join(' ');
@@ -111,13 +111,14 @@ exports.updateCampground = async (req,res,next) => {
 //@access   Private
 exports.deleteCampground = async(req,res,next) =>{
     try{
-        const campground = await Campground.findById(req.params.id);
+        let campground = await Campground.findById(req.params.id);
         if(!campground){
             return res.status(400).json({success:false});
         }
-        campground.remove();
+        await Campground.findByIdAndRemove(req.params.id);
         res.status(200).json({success:true, data: {}});
     }catch(err){
+        console.log(err);
         res.status(400).json({success:false});
     }
 };

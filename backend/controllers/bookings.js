@@ -143,7 +143,7 @@ exports.deleteBooking = async (req,res,next)=>{
             return res.status(401).json({success:false,messag:`User ${req.user.id} is not authorized to delete this booking`});
         }
 
-        await Booking.remove();
+        await Booking.findByIdAndRemove(req.params.id);
         res.status(200).json({success:true,data:{}});
     } catch (error){
         console.log(error);
